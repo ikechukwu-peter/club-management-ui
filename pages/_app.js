@@ -5,12 +5,18 @@ import Footer from '../components/Footer'
 import jwtDecode from 'jwt-decode'
 
 if (typeof window !== "undefined") {
-  let token = jwtDecode(localStorage.getItem('token'))
-  //Check for expired token
-  const currentTime = Date.now() / 1000;
-  if (token.exp < currentTime) {
-    localStorage.clear()
-    window.location.href = '/login'
+  let token = localStorage.getItem('token')
+  if (token) {
+    let decoded = jwtDecode(token)
+    //Check for expired token
+    const currentTime = Date.now() / 1000;
+    if (decoded.exp < currentTime) {
+      localStorage.clear()
+      window.location.href = '/login'
+    }
+  }
+  else {
+    window.location.href = '/'
   }
 }
 function MyApp({ Component, pageProps }) {
