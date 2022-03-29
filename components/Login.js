@@ -58,6 +58,8 @@ export default function Login() {
                 });
                 if (res.data.user.token) {
                     localStorage.setItem("token", res.data.user.token)
+                    localStorage.setItem("user", res.data.user.user.id)
+
                     router.push('/dashboard')
                 }
             } catch (error) {

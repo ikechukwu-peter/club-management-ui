@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
     Box,
     Stack,
@@ -13,12 +13,15 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 
 
 const Header = (props) => {
+    const [ isAuthenticated, setIsAuthenticated ] = useState(false)
     const { isOpen, onOpen, onClose } = useDisclosure();
     const handleToggle = () => (isOpen ? onClose() : onOpen());
-    let isAuthenticated;
     useEffect(() => {
-        isAuthenticated = localStorage.getItem('token')
-
+        // Perform localStorage action
+        const token = localStorage.getItem('token')
+        if (token) {
+            setIsAuthenticated(!isAuthenticated)
+        }
     }, [])
 
     const authLinks = (
@@ -56,7 +59,6 @@ const Header = (props) => {
         </>
 
     )
-
 
     const guestLinks = (
         <>
@@ -113,7 +115,7 @@ const Header = (props) => {
                 flexGrow={1}
                 mt={{ base: 4, md: 0 }}
             >
-                <Text>Docs</Text>
+                <Text>Create Club</Text>
                 <Text>Examples</Text>
                 <Text>Blog</Text>
             </Stack>
