@@ -1,7 +1,6 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import Header from '../components/Header'
-import Footer from '../components/Footer'
+import NextLink from 'next/link'
+import { Flex, Button, Box, Text } from '@chakra-ui/react'
 
 export default function Home() {
   return (
@@ -12,10 +11,42 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
-        <Header />
-        <Footer />
+        <Flex
+          alignItems="center"
+          justifyContent="center"
+          flexDir="column"
+          height="80%"
+        >
+          <Box
+            mb="5rem"
+          >
+            <Text as='h4'
+              fontSize="2.2rem"
+              py="2rem"
+              fontWeight={{ base: "normal", md: "bold" }}
+              mx="2rem"
+
+            >
+              Welcome to FaRoyale, join to do more.
+            </Text>
+          </Box>
+          <Box
+            mb="5rem"
+          >
+            <NextLink href="/register" passHref>
+              <Button
+                as='a'
+                bg="teal.500"
+                color="whiteAlpha.900"
+              >
+                Join FaRoyale
+              </Button>
+            </NextLink>
+
+          </Box>
+        </Flex>
       </main>
-      
+
     </div>
   )
 }

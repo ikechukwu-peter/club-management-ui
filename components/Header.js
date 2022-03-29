@@ -13,7 +13,7 @@ import { HamburgerIcon } from "@chakra-ui/icons";
 
 
 const Header = (props) => {
-    const [ isAuthenticated, setIsAuthenticated ] = useState(false)
+    const [isAuthenticated, setIsAuthenticated] = useState(false)
     const { isOpen, onOpen, onClose } = useDisclosure();
     const handleToggle = () => (isOpen ? onClose() : onOpen());
     useEffect(() => {
@@ -24,6 +24,41 @@ const Header = (props) => {
         }
     }, [])
 
+
+    const dashAuth = (
+        <>
+            <NextLink href="/create" passHref>
+                <Button
+                    variant="outline"
+                    _hover={{ bg: "teal.700", borderColor: "teal.700" }}
+                    mx={{ base: 3, md: 7 }}
+                    mb={{ base: 3, md: 0 }}
+                    as="a"
+
+                >
+                    Create Club
+                </Button>
+            </NextLink>
+        </>
+    )
+
+
+    const dashGuest = (
+        <>
+            <NextLink href="/about" passHref>
+                <Button
+                    variant="outline"
+                    _hover={{ bg: "teal.700", borderColor: "teal.700" }}
+                    mx={{ base: 3, md: 7 }}
+                    mb={{ base: 3, md: 0 }}
+                    as="a"
+
+                >
+                    About Us
+                </Button>
+            </NextLink>
+        </>
+    )
     const authLinks = (
         <>
             <NextLink href="/dashboard" passHref>
@@ -47,7 +82,7 @@ const Header = (props) => {
                     All User
                 </Button>
             </NextLink>
-            <NextLink href="/club/:clubId" passHref>
+            <NextLink href="/club" passHref>
                 <Button
                     variant="outline"
                     _hover={{ bg: "teal.700", borderColor: "teal.700" }}
@@ -115,9 +150,7 @@ const Header = (props) => {
                 flexGrow={1}
                 mt={{ base: 4, md: 0 }}
             >
-                <Text>Create Club</Text>
-                <Text>Examples</Text>
-                <Text>Blog</Text>
+                {isAuthenticated ? dashAuth : dashGuest}
             </Stack>
             <Box
                 display={{ base: isOpen ? "flex" : "none", md: "block" }}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import withAuth from "../utils/withAuth.js";
 import Footer from '../components/Footer'
 import Header from '../components/Header'
@@ -7,6 +7,7 @@ import axios from 'axios'
 
 const Dashboard = () => {
   const [userdata, setUserdata] = useState(null)
+  const [clubs, setClubs] = useState([])
   const [loading, setLoading] = useState(false)
 
   useEffect(async () => {
@@ -35,12 +36,32 @@ const Dashboard = () => {
     }
   }, [])
 
+  const checkForInvitation = useCallback(async () => {
+    const token = localStorage.getItem('token')
+    try {
+      let clubs = await axios({
+        method: "GET",
+        url: `https://clubmanagementapi.herokuapp.com/club/clubs/user`,
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+      console.log(clubs)
+      if (clubs) {
+        setClubs(clubs.data.data)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }, [])
+
+  useEffect(() => {
+    checkForInvitation()
+  }, [checkForInvitation])
 
   return (
     <>
-      <Header />
-      {userdata ? <DashboardPage user={userdata} /> : null}
-      <Footer />
+      {userdata ? <DashboardPage user={userdata} clubs={clubs} /> : null}
     </>
   );
 };
