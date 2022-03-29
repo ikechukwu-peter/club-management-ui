@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useLayoutEffect, useState, useCallback } from "react";
 import withAuth from "../utils/withAuth.js";
 import axios from 'axios'
 import NextLink from 'next/link'
@@ -32,7 +32,7 @@ const Clubs = () => {
     }, [])
 
 
-    useEffect( () => {
+    useLayoutEffect( () => {
         fetchData()
     }, [fetchData])
 
@@ -77,7 +77,10 @@ const Clubs = () => {
                         </Box>
                     )
                 })
-                : <Text> You have no club created yet </Text>}
+                : <Text
+                fontSize="1.3rem"
+                mx="2rem"
+                > You have no club created yet </Text>}
         </>
     );
 };
