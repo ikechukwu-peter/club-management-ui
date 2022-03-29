@@ -39,7 +39,7 @@ const Dashboard = () => {
 
     fetchData()
 
-  }, [])
+  }, [fetchData])
 
   const checkForInvitation = useCallback(async () => {
     const token = localStorage.getItem('token')
