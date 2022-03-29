@@ -66,7 +66,7 @@ export default function Login() {
                 console.log(error)
                 let errorResponse = error.response ? error.response.errorMessage : "Check your internet connection"
 
-                const { hide, hideAfter } = cogoToast.error(`${errorResponse}`, {
+                const { hide, hideAfter } = cogoToast.error(`Something went wrong,  please try again`, {
                     onClick: () => {
                         hide();
                     },
