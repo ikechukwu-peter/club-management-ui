@@ -40,11 +40,24 @@ const createClub = () => {
                     'Authorization': `Bearer ${token}`
                 }
             })
+            console.log(newClub)
+            const { hide, hideAfter } = cogoToast.success(`Club created`, {
+                onClick: () => {
+                    hide();
+                },
+                hideAfter: 3
+            });
             if (newClub) {
-                router.push(`/club/${newClub.id}`)
+                router.push(`/clubmembers/${newClub.data.newClub.id}`)
             }
         } catch (error) {
             console.log(error)
+            const { hide, hideAfter } = cogoToast.error(`${error ? error.data.error : 'Please check your network'}`, {
+                onClick: () => {
+                    hide();
+                },
+                hideAfter: 3
+            });
             setLoading(false)
         }
         finally {

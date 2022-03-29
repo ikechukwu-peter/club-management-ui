@@ -9,10 +9,12 @@ import {
     useDisclosure
 } from "@chakra-ui/react";
 import NextLink from 'next/link'
+import { useRouter } from 'next/router'
 import { HamburgerIcon } from "@chakra-ui/icons";
 
 
 const Header = (props) => {
+    const router = useRouter()
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const { isOpen, onOpen, onClose } = useDisclosure();
     const handleToggle = () => (isOpen ? onClose() : onOpen());
@@ -24,6 +26,10 @@ const Header = (props) => {
         }
     }, [])
 
+    const logOut = () => {
+        localStorage.clear('token')
+        router.push('/')
+    }
 
     const dashAuth = (
         <>
@@ -75,6 +81,7 @@ const Header = (props) => {
             </NextLink>
             <NextLink href="/users" passHref>
                 <Button
+                    mx={{ base: 3, md: 7 }}
                     variant="outline"
                     _hover={{ bg: "teal.700", borderColor: "teal.700" }}
                     as="a"
@@ -82,13 +89,22 @@ const Header = (props) => {
                     All User
                 </Button>
             </NextLink>
-            <NextLink href="/club" passHref>
+            <Button
+                mx={{ base: 3, md: 7 }}
+                variant="outline"
+                _hover={{ bg: "teal.700", borderColor: "teal.700" }}
+                as="a"
+                onClick={logOut}
+            >
+                Your Club
+            </Button>
+            <NextLink href="/clubs" passHref>
                 <Button
                     variant="outline"
                     _hover={{ bg: "teal.700", borderColor: "teal.700" }}
                     as="a"
                 >
-                    Your Club
+                    Logout
                 </Button>
             </NextLink>
         </>

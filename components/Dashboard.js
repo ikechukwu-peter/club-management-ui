@@ -15,8 +15,21 @@ export default function DashboardPage({ user, clubs }) {
                 }
             })
 
+            const { hide, hideAfter } = cogoToast.success(`You have joined successfully`, {
+                onClick: () => {
+                    hide();
+                },
+                hideAfter: 3
+            });
+
         } catch (error) {
             console.log(error)
+            const { hide, hideAfter } = cogoToast.error(`Error while processing your request`, {
+                onClick: () => {
+                    hide();
+                },
+                hideAfter: 3
+            });
         }
     }
     const rejectInvitation = async (memberId) => {
@@ -29,9 +42,21 @@ export default function DashboardPage({ user, clubs }) {
                     'Authorization': `Bearer ${token}`
                 }
             })
+            const { hide, hideAfter } = cogoToast.success(`Rejection successful`, {
+                onClick: () => {
+                    hide();
+                },
+                hideAfter: 3
+            });
 
         } catch (error) {
             console.log(error)
+            const { hide, hideAfter } = cogoToast.error(`Error while processing your request`, {
+                onClick: () => {
+                    hide();
+                },
+                hideAfter: 3
+            });
         }
     }
     return (
@@ -43,7 +68,7 @@ export default function DashboardPage({ user, clubs }) {
                 >
                     Welcome {user.username}
                 </Text>
-                {/* {clubs.length > 0 ? clubs.map((club) => {
+                {clubs.length > 0 ? clubs.map((club) => {
                     return (
                         <Box>
                             <Flex
@@ -82,10 +107,9 @@ export default function DashboardPage({ user, clubs }) {
                             </Flex>
                         </Box>
                     )
-                }) : null} */}
+                }) : null}
 
             </Box>
         </Flex>
-        //<h2>{user.firstname}</h2>
     )
 }

@@ -1,9 +1,9 @@
 import { useEffect, useState, useCallback } from "react";
 import withAuth from "../utils/withAuth.js";
-import Footer from '../components/Footer'
-import Header from '../components/Header'
 import DashboardPage from "../components/Dashboard.js";
 import axios from 'axios'
+import cogoToast from 'cogo-toast'
+
 
 const Dashboard = () => {
   const [userdata, setUserdata] = useState(null)
@@ -48,7 +48,7 @@ const Dashboard = () => {
       })
       console.log(clubs)
       if (clubs) {
-        setClubs(clubs.data.data)
+        setClubs(clubs.data)
       }
     } catch (error) {
       console.log(error)

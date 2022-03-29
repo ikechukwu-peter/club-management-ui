@@ -1,20 +1,21 @@
 import { useEffect, useState, useCallback } from "react";
-import withAuth from "../utils/withAuth.js";
-import Footer from '../components/Footer'
-import Header from '../components/Header'
+import withAuth from "../../utils/withAuth.js";
+import Footer from '../../components/Footer'
+import Header from '../../components/Header'
 import axios from 'axios'
 import { useRouter } from 'next/router'
+import { Text, Flex, Box, Button, } from '@chakra-ui/react'
+import cogoToast from 'cogo-toast'
 
 const ClubMembers = () => {
     const router = useRouter()
-    const { pid } = router.query
+    const { id } = router.query
 
     const [members, setMembers] = useState([])
     const [loading, setLoading] = useState(false)
     const removeMember = useCallback(async (memberId) => {
         const token = localStorage.getItem('token')
         try {
-            console.log(token, userId)
             setLoading(true)
             let clubs = await axios({
                 method: "GET",
@@ -23,12 +24,23 @@ const ClubMembers = () => {
                     'Authorization': `Bearer ${token}`
                 }
             })
+            const { hide, hideAfter } = cogoToast.success(`Removal successful`, {
+                onClick: () => {
+                    hide();
+                },
+                hideAfter: 3
+            });
             if (clubs) {
                 setClubs(clubs.data.user)
             }
-            console.log(user)
         } catch (error) {
             console.log(error)
+            const { hide, hideAfter } = cogoToast.success(`Error while processing your request`, {
+                onClick: () => {
+                    hide();
+                },
+                hideAfter: 3
+            });
             setLoading(false)
         }
         finally {
@@ -40,19 +52,17 @@ const ClubMembers = () => {
     useEffect(async () => {
         const token = localStorage.getItem('token')
         try {
-            console.log(token, userId)
             setLoading(true)
             let members = await axios({
                 method: "GET",
-                url: `https://clubmanagementapi.herokuapp.com/club/members/${pid}`,
+                url: `https://clubmanagementapi.herokuapp.com/club/members/${id}`,
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
             })
             if (members) {
-                setMembers(members.data.data)
+                setMembers(members.data)
             }
-            console.log(user)
         } catch (error) {
             console.log(error)
             setLoading(false)
@@ -65,7 +75,7 @@ const ClubMembers = () => {
 
     return (
         <>
-            <Header />
+
             {members.length > 0 ?
                 members.map((member) => {
                     return (
@@ -104,8 +114,12 @@ const ClubMembers = () => {
                         </Box>
                     )
                 })
-                : <Text> No members has joined your club yet </Text>}
-            <Footer />
+                : <Text
+                    mx="2rem"
+                    fontSize="1.5rem" >
+                    No members has joined your club yet
+                </Text>}
+
         </>
     );
 };

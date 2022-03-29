@@ -1,12 +1,16 @@
 import { Flex, Box, Text, Button } from '@chakra-ui/react'
 import axios from 'axios'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import clubs from '../pages/clubs'
 
-export default function Users({ users }) {
+export default function Users({ users, clubs }) {
+    console.log(clubs)
     const [loading, setLoading] = useState(false)
 
     const inviteUser = async (username) => {
+        console.log(username, clubs[0].id)
         const token = localStorage.getItem('token')
+        const clubId = clubs[0].id
         try {
             setLoading(true)
             let invite = await axios({
@@ -29,9 +33,11 @@ export default function Users({ users }) {
 
 
     }
+
     return (
         <>
             {
+
                 users.map((user) => {
                     return (
                         <Box>
@@ -65,6 +71,7 @@ export default function Users({ users }) {
                         </Box>
                     )
                 })
+
             }
 
         </>

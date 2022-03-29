@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import withAuth from "../utils/withAuth.js";
-import Footer from '../components/Footer'
-import Header from '../components/Header'
 import axios from 'axios'
 import NextLink from 'next/link'
+import { Text, Box, Flex, Button } from '@chakra-ui/react'
 
 const Clubs = () => {
     const [clubs, setClubs] = useState([])
@@ -12,7 +11,6 @@ const Clubs = () => {
     useEffect(async () => {
         const token = localStorage.getItem('token')
         try {
-            console.log(token, userId)
             setLoading(true)
             let clubs = await axios({
                 method: "GET",
@@ -22,9 +20,8 @@ const Clubs = () => {
                 }
             })
             if (clubs) {
-                setClubs(clubs.data.user)
+                setClubs(clubs.data)
             }
-            console.log(user)
         } catch (error) {
             console.log(error)
             setLoading(false)
@@ -37,7 +34,6 @@ const Clubs = () => {
 
     return (
         <>
-            <Header />
             {clubs.length > 0 ?
                 clubs.map((club) => {
                     return (
@@ -61,7 +57,7 @@ const Clubs = () => {
                                     py="2rem"
 
                                 >
-                                    <NextLink href={`${clubmembers / club.id}`} passHref>
+                                    <NextLink href={`clubmembers/${club.id}`} passHref>
                                         <Button
                                             size='md'
                                             colorScheme="teal.800"
@@ -77,7 +73,6 @@ const Clubs = () => {
                     )
                 })
                 : <Text> You have no club created yet </Text>}
-            <Footer />
         </>
     );
 };
