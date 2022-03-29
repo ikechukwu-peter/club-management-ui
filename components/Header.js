@@ -18,7 +18,7 @@ const Header = (props) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const { isOpen, onOpen, onClose } = useDisclosure();
     const handleToggle = () => (isOpen ? onClose() : onOpen());
-    if(window !== undefined) {
+    if( typeof window !== "undefined") {
         // Perform localStorage action
         const token = localStorage.getItem('token')
         if (token) {
