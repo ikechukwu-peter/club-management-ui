@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useLayoutEffect } from 'react'
 import {
     Flex,
     Box,
@@ -15,11 +15,19 @@ import {
 } from '@chakra-ui/react'
 import axios from 'axios'
 import cogoToast from 'cogo-toast'
+import { useRouter } from 'next/router'
 
 export default function Login() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [loading, setLoading] = useState(false)
+    const router = useRouter()
+    useLayoutEffect(() => {
+        const isAuthenticated = localStorage.getItem('token')
+        if (isAuthenticated) {
+            router.push('/dashboard')
+        }
+    }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -29,7 +37,7 @@ export default function Login() {
                 setLoading(true)
                 let res = await axios({
                     method: "POST",
-                    url: '/api/mail',
+                    url: 'https://clubmanagementapi.herokuapp.com/user/login',
                     data: {
                         email,
                         password
@@ -42,12 +50,16 @@ export default function Login() {
                 setPassword("")
 
 
-                const { hide, hideAfter } = cogoToast.success(`${res.data.success}`, {
+                const { hide, hideAfter } = cogoToast.success(`Logged in successfully`, {
                     onClick: () => {
                         hide();
                     },
-                    hideAfter: 5
+                    hideAfter: 3
                 });
+                if (res.data.user.token) {
+                    localStorage.setItem("token", res.data.user.token)
+                    router.push('/dashboard')
+                }
             } catch (error) {
                 console.log(error)
                 let errorResponse = error.response ? error.response.errorMessage : "Check your internet connection"

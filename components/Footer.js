@@ -1,89 +1,44 @@
-import {
-    Flex,
-    Box,
-    Link
-} from '@chakra-ui/react'
-import { FaGithub } from "react-icons/fa"
-import { ImLinkedin2 } from 'react-icons/im'
-import { SiInstagram } from 'react-icons/si'
+import { ButtonGroup, Container, IconButton, Stack, Text } from '@chakra-ui/react'
+import * as React from 'react'
+import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa'
 
-export default function Footer() {
-    return (
-        <Box bg="teal.600"
-            w="100vw"
-            id="#footer"
-            bottom="0"
-        >
-            <Flex
-                justifyContent="center"
-                alignItems="center"
-                py="5rem"
-                bottom="0"
-                color="gray.50"
-                fontSize={["1.2rem", "1.2rem", "1.3rem", "1.5rem"]}
-            >
-
-                <Link
-                    href='https://linkedin.com/in/peter-ikechukwu'
-                    isExternal
-                    _hover={
-                        {
-                            textDecor: "none"
-                        }
-                    }
-
-                    _focus={
-                        {
-                            border: "none",
-                        }
-                    }
-                    px="2rem"
-                >
-                    <ImLinkedin2 />
-                </Link>
-                <Link
-                    href='https://github.com/ikechukwu-peter'
-                    isExternal
-                    _hover={
-                        {
-                            textDecor: "none"
-                        }
-                    }
-
-                    _focus={
-                        {
-                            border: "none",
-                        }
-                    }
-                    px="2rem"
-
-                >
-                    <FaGithub />
-                </Link>
-                <Link
-                    href="https://instagram.com/pete_iyke"
-                    isExternal
-                    _hover={
-                        {
-                            textDecor: "none"
-                        }
-                    }
-                    _focus={
-                        {
-                            border: "none",
-                        }
-
-                    }
-                    px="2rem"
-                >
-                    <SiInstagram />
-                </Link>
-
-
-            </Flex>
-
-        </Box>
-
-    )
-
+export default function App() {
+  return (
+    <Container
+      as="footer"
+      role="contentinfo"
+      py={{
+        base: '12',
+        md: '16',
+      }}
+    >
+      <Stack
+        spacing={{
+          base: '4',
+          md: '5',
+        }}
+      >
+        <Stack justify="space-between" direction="row" align="center">
+          <ButtonGroup variant="ghost">
+            <IconButton
+              as="a"
+              href="#"
+              aria-label="LinkedIn"
+              icon={<FaLinkedin fontSize="1.25rem" />}
+            />
+            <IconButton as="a" href="#" aria-label="GitHub" icon={<FaGithub fontSize="1.25rem" />} />
+            <IconButton
+              as="a"
+              href="#"
+              aria-label="Twitter"
+              icon={<FaTwitter fontSize="1.25rem" />}
+            />
+          </ButtonGroup>
+        </Stack>
+        <Text fontSize="sm" color="subtle">
+          &copy; {new Date().getFullYear()} Chakra UI Pro, Inc. All rights reserved.
+        </Text>
+      </Stack>
+    </Container>
+  )
 }

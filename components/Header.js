@@ -1,80 +1,162 @@
-import Head from 'next/head'
-import { useRouter } from "next/router";
-import NextLink from 'next/link'
-import { useState } from 'react'
+import React, { useEffect } from "react";
 import {
-    Flex,
     Box,
+    Stack,
     Heading,
-    Link,
-    IconButton,
-    useColorMode,
-} from '@chakra-ui/react'
-import {
-    HamburgerIcon,
-    SmallCloseIcon
-} from "@chakra-ui/icons"
-// const router = useRouter()
+    Flex,
+    Text,
+    Button,
+    useDisclosure
+} from "@chakra-ui/react";
+import NextLink from 'next/link'
+import { HamburgerIcon } from "@chakra-ui/icons";
 
-export default function Header() {
-    const router = useRouter()
-    const [display, changeDisplay] = useState("none")
 
-    return (
+const Header = (props) => {
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const handleToggle = () => (isOpen ? onClose() : onOpen());
+    let isAuthenticated;
+    useEffect(() => {
+        isAuthenticated = localStorage.getItem('token')
+
+    }, [])
+
+    const authLinks = (
         <>
-            <Head>
-                <title>Ikechukwu Peter Portfolio</title>
-                <meta name="description" content="Ikechukwu Peter Portfolio" />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
-            <Flex maxW="auto"
-                bg="teal.200"
-                minH={"6rem"}
-                h={["4rem", "4rem", "5rem"]}
-                justifyContent="space-around"
-                alignItems="center"
-                fontFamily="Source Sans Pro"
-                fontWeight="600"
-            >
-                <Heading
-                    _hover={{ cursor: "pointer" }}
-                    fontSize={["1rem", "1.2rem"]}
-                    ml={["1rem", "1rem", "1rem", "3rem"]}
-                    w="50%"
+            <NextLink href="/dashboard" passHref>
+                <Button
+                    variant="outline"
+                    _hover={{ bg: "teal.700", borderColor: "teal.700" }}
+                    mx={{ base: 3, md: 7 }}
+                    mb={{ base: 3, md: 0 }}
+                    as="a"
+
                 >
-                    Club X
-                </Heading>
-                <Box>
-                    <NextLink href={'/login'} passHref>
-                        <Link
-                            textDecor="none"
-                            _hover={
-                                {
-                                    textDecor: "none"
-                                }
-                            }
-                            padding='10rem'
-                        >
-                            Login
-                        </Link>
-                    </NextLink>
-                    <NextLink href={'/register'} passHref>
-                        <Link
-                            textDecor="none"
-                            _hover={
-                                {
-                                    textDecor: "none"
-                                }
-                            }
-                            padding='5rem'
-                        >
-                            Sign Up
-                        </Link>
-                    </NextLink>
-                </Box>
-            </Flex>
+                    Dashboard
+                </Button>
+            </NextLink>
+            <NextLink href="/users" passHref>
+                <Button
+                    variant="outline"
+                    _hover={{ bg: "teal.700", borderColor: "teal.700" }}
+                    as="a"
+                >
+                    All User
+                </Button>
+            </NextLink>
+            <NextLink href="/club/:clubId" passHref>
+                <Button
+                    variant="outline"
+                    _hover={{ bg: "teal.700", borderColor: "teal.700" }}
+                    as="a"
+                >
+                    Your Club
+                </Button>
+            </NextLink>
+        </>
+
+    )
 
 
+    const guestLinks = (
+        <>
+            <NextLink href="/login" passHref>
+                <Button
+                    variant="outline"
+                    _hover={{ bg: "teal.700", borderColor: "teal.700" }}
+                    mx={{ base: 3, md: 7 }}
+                    mb={{ base: 3, md: 0 }}
+                    as="a"
+
+                >
+                    Login
+                </Button>
+            </NextLink>
+            <NextLink href="/register" passHref>
+                <Button
+                    variant="outline"
+                    _hover={{ bg: "teal.700", borderColor: "teal.700" }}
+                    as="a"
+                >
+                    Create account
+                </Button>
+            </NextLink>
         </>
     )
-}
+
+    return (
+        <Flex
+            as="nav"
+            align="center"
+            justify="space-between"
+            wrap="wrap"
+            padding={6}
+            bg="teal.500"
+            color="white"
+            {...props}
+        >
+            <Flex align="center" mr={5}>
+                <Heading as="h1" size="lg" letterSpacing={"tighter"}>
+                    FaRoyale
+                </Heading>
+            </Flex>
+
+            <Box display={{ base: "block", md: "none" }} onClick={handleToggle}>
+                <HamburgerIcon />
+            </Box>
+
+            <Stack
+                direction={{ base: "column", md: "row" }}
+                display={{ base: isOpen ? "block" : "none", md: "flex" }}
+                width={{ base: "full", md: "auto" }}
+                alignItems="center"
+                flexGrow={1}
+                mt={{ base: 4, md: 0 }}
+            >
+                <Text>Docs</Text>
+                <Text>Examples</Text>
+                <Text>Blog</Text>
+            </Stack>
+            <Box
+                display={{ base: isOpen ? "flex" : "none", md: "block" }}
+                flexDir={{ base: "column" }}
+                justifyContent={{ base: "space-between" }}
+                mt={{ base: 4, md: 0 }}
+            >
+                {isAuthenticated ? authLinks : guestLinks}
+            </Box>
+
+            {/* <Box
+                display={{ base: isOpen ? "flex" : "none", md: "block" }}
+                flexDir={{ base: "column" }}
+                justifyContent={{ base: "space-between" }}
+                mt={{ base: 4, md: 0 }}
+            // mx={{ base: 3, md: 5 }}
+            >
+                <NextLink href="/login" passHref>
+                    <Button
+                        variant="outline"
+                        _hover={{ bg: "teal.700", borderColor: "teal.700" }}
+                        mx={{ base: 3, md: 7 }}
+                        mb={{ base: 3, md: 0 }}
+                        as="a"
+
+                    >
+                        Login
+                    </Button>
+                </NextLink>
+                <NextLink href="/register" passHref>
+                    <Button
+                        variant="outline"
+                        _hover={{ bg: "teal.700", borderColor: "teal.700" }}
+                        as="a"
+                    >
+                        Create account
+                    </Button>
+                </NextLink>
+            </Box> */}
+        </Flex>
+    );
+};
+
+export default Header;

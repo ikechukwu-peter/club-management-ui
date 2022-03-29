@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useLayoutEffect } from 'react'
 import {
     Flex,
     Box,
@@ -14,8 +14,9 @@ import {
 
 } from '@chakra-ui/react'
 import axios from 'axios'
-import { FiSend } from "react-icons/fi"
 import cogoToast from 'cogo-toast'
+import { useRouter } from 'next/router'
+
 
 export default function Contact({
     darkTextColor,
@@ -27,6 +28,15 @@ export default function Contact({
     const [username, setUsername] = useState('')
 
     const [loading, setLoading] = useState(false)
+
+    const router = useRouter()
+
+     useLayoutEffect(() => {
+        const isAuthenticated = localStorage.getItem('token')
+        if (isAuthenticated) {
+            router.push('/dashboard')
+        }
+    }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -41,7 +51,7 @@ export default function Contact({
                 setLoading(true)
                 let res = await axios({
                     method: "POST",
-                    url: '/api/mail',
+                    url: 'https://clubmanagementapi.herokuapp.com/user/register',
                     data: {
                         firstname,
                         lastname,
@@ -54,16 +64,20 @@ export default function Contact({
                 console.log(res.data)
 
                 setEmail("")
-                setSubject("")
-                setName("")
-                setMessage("")
+                setPassword("")
+                setFirstname("")
+                setLastname("")
+                setUsername("")
 
-                const { hide, hideAfter } = cogoToast.success(`${res.data.success}`, {
+                const { hide, hideAfter } = cogoToast.success(`Registration successful`, {
                     onClick: () => {
                         hide();
                     },
-                    hideAfter: 5
+                    hideAfter: 3
                 });
+                if (res.data) {
+                    router.push('/login')
+                }
             } catch (error) {
                 console.log(error)
                 let errorResponse = error.response ? error.response.errorMessage : "Check your internet connection"
