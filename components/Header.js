@@ -22,9 +22,9 @@ const Header = (props) => {
         // Perform localStorage action
         const token = localStorage.getItem('token')
         if (token) {
-            setIsAuthenticated(!isAuthenticated)
+            setIsAuthenticated(true)
         }
-    }, [isAuthenticated])
+    }, [!isAuthenticated])
 
     const logOut = () => {
         localStorage.clear('token')
