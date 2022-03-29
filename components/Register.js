@@ -36,7 +36,7 @@ export default function Contact({
         if (isAuthenticated) {
             router.push('/dashboard')
         }
-    }, [])
+    }, [router])
 
     const handleSubmit = async (e) => {
         e.preventDefault()

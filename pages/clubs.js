@@ -9,27 +9,31 @@ const Clubs = () => {
     const [loading, setLoading] = useState(false)
 
     useEffect(async () => {
-        const token = localStorage.getItem('token')
-        try {
-            setLoading(true)
-            let clubs = await axios({
-                method: "GET",
-                url: `https://clubmanagementapi.herokuapp.com/club/clubs`,
-                headers: {
-                    'Authorization': `Bearer ${token}`
+        async function fetchData() {
+            const token = localStorage.getItem('token')
+            try {
+                setLoading(true)
+                let clubs = await axios({
+                    method: "GET",
+                    url: `https://clubmanagementapi.herokuapp.com/club/clubs`,
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                if (clubs) {
+                    setClubs(clubs.data)
                 }
-            })
-            if (clubs) {
-                setClubs(clubs.data)
+            } catch (error) {
+                console.log(error)
+                setLoading(false)
             }
-        } catch (error) {
-            console.log(error)
-            setLoading(false)
+            finally {
+                setLoading(false)
+            }
+
+            fetchData()
         }
-        finally {
-            setLoading(false)
-        }
-    }, [])
+    }, [fetchData])
 
 
     return (
@@ -37,7 +41,7 @@ const Clubs = () => {
             {clubs.length > 0 ?
                 clubs.map((club) => {
                     return (
-                        <Box>
+                        <Box key={club.id}>
                             <Flex
                                 flexDir={{ base: 'column', md: 'row' }}
                                 justifyContent={{ base: 'space-between' }}

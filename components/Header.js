@@ -24,7 +24,7 @@ const Header = (props) => {
         if (token) {
             setIsAuthenticated(!isAuthenticated)
         }
-    }, [])
+    }, [isAuthenticated])
 
     const logOut = () => {
         localStorage.clear('token')

@@ -1,4 +1,4 @@
-import { ButtonGroup, Container, IconButton, Stack, Flex, Box, Text } from '@chakra-ui/react'
+import { ButtonGroup, Container, IconButton, Stack, Flex, Box, Text,FormControl, FormLabel, Input, Button } from '@chakra-ui/react'
 import * as React from 'react'
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa'
 
@@ -70,7 +70,7 @@ export default function DashboardPage({ user, clubs }) {
                 </Text>
                 {clubs.length > 0 ? clubs.map((club) => {
                     return (
-                        <Box>
+                        <Box key={club.id}>
                             <Flex
                                 flexDir={{ base: 'column', md: 'row' }}
                                 justifyContent={{ base: 'space-between' }}

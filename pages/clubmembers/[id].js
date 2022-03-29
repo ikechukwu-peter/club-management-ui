@@ -49,28 +49,31 @@ const ClubMembers = () => {
     }, [])
 
 
-    useEffect(async () => {
-        const token = localStorage.getItem('token')
-        try {
-            setLoading(true)
-            let members = await axios({
-                method: "GET",
-                url: `https://clubmanagementapi.herokuapp.com/club/members/${id}`,
-                headers: {
-                    'Authorization': `Bearer ${token}`
+    useEffect(() => {
+        async function fetchMembers() {
+            const token = localStorage.getItem('token')
+            try {
+                setLoading(true)
+                let members = await axios({
+                    method: "GET",
+                    url: `https://clubmanagementapi.herokuapp.com/club/members/${id}`,
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                if (members) {
+                    setMembers(members.data)
                 }
-            })
-            if (members) {
-                setMembers(members.data)
+            } catch (error) {
+                console.log(error)
+                setLoading(false)
             }
-        } catch (error) {
-            console.log(error)
-            setLoading(false)
+            finally {
+                setLoading(false)
+            }
         }
-        finally {
-            setLoading(false)
-        }
-    }, [])
+        fetchMembers()
+    }, [id])
 
 
     return (
@@ -79,7 +82,7 @@ const ClubMembers = () => {
             {members.length > 0 ?
                 members.map((member) => {
                     return (
-                        <Box>
+                        <Box key={member.id}>
                             <Flex
                                 flexDir={{ base: 'column', md: 'row' }}
                                 justifyContent={{ base: 'space-between' }}

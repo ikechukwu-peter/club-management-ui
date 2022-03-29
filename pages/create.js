@@ -15,17 +15,14 @@ import { useRouter } from 'next/router'
 
 
 
-const createClub = () => {
+const CreateClub = () => {
     const [loading, setLoading] = useState(false)
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
-
     const router = useRouter()
-
 
     const createNewClub = async (e) => {
         e.preventDefault()
-
         const token = localStorage.getItem('token')
         try {
             setLoading(true)
@@ -190,4 +187,4 @@ const createClub = () => {
     );
 };
 
-export default withAuth(createClub);
+export default withAuth(CreateClub);

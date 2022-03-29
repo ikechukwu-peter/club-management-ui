@@ -10,30 +10,35 @@ const Dashboard = () => {
   const [clubs, setClubs] = useState([])
   const [loading, setLoading] = useState(false)
 
-  useEffect(async () => {
-    const userId = localStorage.getItem('user')
-    const token = localStorage.getItem('token')
-    try {
-      console.log(token, userId)
-      setLoading(true)
-      let user = await axios({
-        method: "GET",
-        url: `https://clubmanagementapi.herokuapp.com/user/user/${userId}`,
-        headers: {
-          'Authorization': `Bearer ${token}`
+  useEffect(() => {
+    async function fetchData() {
+      const userId = localStorage.getItem('user')
+      const token = localStorage.getItem('token')
+      try {
+        console.log(token, userId)
+        setLoading(true)
+        let user = await axios({
+          method: "GET",
+          url: `https://clubmanagementapi.herokuapp.com/user/user/${userId}`,
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+        if (user) {
+          setUserdata(user.data.user)
         }
-      })
-      if (user) {
-        setUserdata(user.data.user)
+        console.log(user)
+      } catch (error) {
+        console.log(error)
+        setLoading(false)
       }
-      console.log(user)
-    } catch (error) {
-      console.log(error)
-      setLoading(false)
+      finally {
+        setLoading(false)
+      }
     }
-    finally {
-      setLoading(false)
-    }
+
+    fetchData()
+
   }, [])
 
   const checkForInvitation = useCallback(async () => {

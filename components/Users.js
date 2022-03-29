@@ -40,7 +40,7 @@ export default function Users({ users, clubs }) {
 
                 users.map((user) => {
                     return (
-                        <Box>
+                        <Box key={user.id}>
                             <Flex
                                 flexDir={{ base: 'column', md: 'row' }}
                                 justifyContent={{ base: 'space-between' }}

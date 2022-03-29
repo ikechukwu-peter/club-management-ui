@@ -27,7 +27,7 @@ export default function Login() {
         if (isAuthenticated) {
             router.push('/dashboard')
         }
-    }, [])
+    }, [router])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
