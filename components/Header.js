@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import {
     Box,
     Stack,
@@ -18,13 +18,19 @@ const Header = (props) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const { isOpen, onOpen, onClose } = useDisclosure();
     const handleToggle = () => (isOpen ? onClose() : onOpen());
-    if( typeof window !== "undefined") {
+    
+    const check = useCallback(() => {  
         // Perform localStorage action
         const token = localStorage.getItem('token')
         if (token) {
-            setIsAuthenticated(!isAuthenticated)
+            setIsAuthenticated(true)
         }
-    }
+    }, [])
+   
+    useEffect(() => {
+    check()
+    }, 
+     [])
 
     const logOut = () => {
         localStorage.clear('token')
@@ -89,6 +95,16 @@ const Header = (props) => {
                     All User
                 </Button>
             </NextLink>
+           
+            <NextLink href="/clubs" passHref>
+                <Button
+                    variant="outline"
+                    _hover={{ bg: "teal.700", borderColor: "teal.700" }}
+                    as="a"
+                >
+                    Your Club
+                </Button>
+            </NextLink>
             <Button
                 mx={{ base: 3, md: 7 }}
                 variant="outline"
@@ -96,17 +112,8 @@ const Header = (props) => {
                 as="a"
                 onClick={logOut}
             >
-                Your Club
+                Log Out
             </Button>
-            <NextLink href="/clubs" passHref>
-                <Button
-                    variant="outline"
-                    _hover={{ bg: "teal.700", borderColor: "teal.700" }}
-                    as="a"
-                >
-                    Logout
-                </Button>
-            </NextLink>
         </>
 
     )
