@@ -89,7 +89,7 @@ export default function DashboardPage({ user, clubs }) {
                                 <Box
                                     py="2rem"
                                  d="flex"
-                                 flexDir="column"
+                                 flexDir="row"
                                  justifyContents="space-between"
                                  alignItems="center"
 
