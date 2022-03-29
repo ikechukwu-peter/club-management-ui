@@ -60,13 +60,13 @@ export default function Login() {
                     localStorage.setItem("token", res.data.user.token)
                     localStorage.setItem("user", res.data.user.user.id)
 
-                    router.push('/dashboard')
+                    window.location.href ='/dashboard'
                 }
             } catch (error) {
                 console.log(error)
-                let errorResponse = error.response ? error.response.errorMessage : "Check your internet connection"
+                let errorResponse = error.response ? "Error processing your request" : "Check your internet connection"
 
-                const { hide, hideAfter } = cogoToast.error(`Something went wrong,  please try again`, {
+                const { hide, hideAfter } = cogoToast.error(`{errorResponse}`, {
                     onClick: () => {
                         hide();
                     },
