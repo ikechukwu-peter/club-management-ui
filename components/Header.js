@@ -18,13 +18,13 @@ const Header = (props) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false)
     const { isOpen, onOpen, onClose } = useDisclosure();
     const handleToggle = () => (isOpen ? onClose() : onOpen());
-    useEffect(() => {
+    if(window !== undefined) {
         // Perform localStorage action
         const token = localStorage.getItem('token')
         if (token) {
             setIsAuthenticated(true)
         }
-    }, [router])
+    }
 
     const logOut = () => {
         localStorage.clear('token')
