@@ -34,7 +34,7 @@ const Header = (props) => {
 
     const logOut = () => {
         localStorage.clear('token')
-        router.push('/')
+        window.location.href= '/'
     }
 
     const dashAuth = (
