@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useLayoutEffect, useState } from "react";
 import withAuth from "../utils/withAuth.js";
 import Users from '../components/Users'
 import axios from 'axios'
@@ -58,11 +58,11 @@ const AllUsers = () => {
         }
     }, [])
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         getUsers()
     }, [getUsers])
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         fetchClubs()
     }, [fetchClubs])
 
