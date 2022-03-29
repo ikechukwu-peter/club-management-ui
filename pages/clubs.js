@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import withAuth from "../utils/withAuth.js";
 import axios from 'axios'
 import NextLink from 'next/link'
@@ -8,31 +8,32 @@ const Clubs = () => {
     const [clubs, setClubs] = useState([])
     const [loading, setLoading] = useState(false)
 
-    useEffect(async () => {
-        async function fetchData() {
-            const token = localStorage.getItem('token')
-            try {
-                setLoading(true)
-                let clubs = await axios({
-                    method: "GET",
-                    url: `https://clubmanagementapi.herokuapp.com/club/clubs`,
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                })
-                if (clubs) {
-                    setClubs(clubs.data)
+    const fetchData = useCallback(async () => {
+        const token = localStorage.getItem('token')
+        try {
+            setLoading(true)
+            let clubs = await axios({
+                method: "GET",
+                url: `https://clubmanagementapi.herokuapp.com/club/clubs`,
+                headers: {
+                    'Authorization': `Bearer ${token}`
                 }
-            } catch (error) {
-                console.log(error)
-                setLoading(false)
+            })
+            if (clubs) {
+                setClubs(clubs.data)
             }
-            finally {
-                setLoading(false)
-            }
-
-            fetchData()
+        } catch (error) {
+            console.log(error)
+            setLoading(false)
         }
+        finally {
+            setLoading(false)
+        }
+    }, [])
+
+
+    useEffect( () => {
+        fetchData()
     }, [fetchData])
 
 
