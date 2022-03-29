@@ -75,7 +75,7 @@ export default function DashboardPage({ user, clubs }) {
                                 flexDir={{ base: 'column', md: 'row' }}
                                 justifyContent={{ base: 'space-between' }}
                                 alignItems={{ base: 'center' }}
-                                w="20%"
+                                w="50%"
                                 ml="2rem"
                             >
                                 <Box
@@ -84,10 +84,14 @@ export default function DashboardPage({ user, clubs }) {
                                     <Text as='h2'
                                         color='teal.600'
                                         fontSize="1.5rem"
-                                    > {club.name}</Text>
+                                    > You have been invited to join  {club.name} club</Text>
                                 </Box>
                                 <Box
                                     py="2rem"
+                                 d="flex"
+                                 flexDir="column"
+                                 justifyContents="space-between"
+                                 alignItems="center"
 
                                 >
                                     <Button
