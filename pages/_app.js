@@ -15,9 +15,6 @@ if (typeof window !== "undefined") {
       window.location.href = '/login'
     }
   }
-  else {
-    window.location.href = '/'
-  }
 }
 function MyApp({ Component, pageProps }) {
 
