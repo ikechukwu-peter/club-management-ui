@@ -9,9 +9,8 @@ const Dashboard = () => {
   const [userdata, setUserdata] = useState(null)
   const [clubs, setClubs] = useState([])
   const [loading, setLoading] = useState(false)
-
-  useEffect(() => {
-    async function fetchData() {
+  
+const fetchData = useCallback( async() => {
       const userId = localStorage.getItem('user')
       const token = localStorage.getItem('token')
       try {
@@ -35,8 +34,10 @@ const Dashboard = () => {
       finally {
         setLoading(false)
       }
-    }
+}, [])
 
+  useEffect(() => {
+    
     fetchData()
 
   }, [fetchData])
