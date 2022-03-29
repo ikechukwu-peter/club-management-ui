@@ -110,7 +110,6 @@ const Header = (props) => {
             </NextLink>
             <Button
                 mx={{ base: 3, md: 7 }}
-                mx={{ base: 3, md: 7 }}
                 variant="outline"
                 _hover={{ bg: "teal.700", borderColor: "teal.700" }}
                 as="a"
