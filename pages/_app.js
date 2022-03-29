@@ -16,7 +16,7 @@ let token = localStorage.getItem('token')
  const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
     localStorage.clear()
-    window.location.href = '/login'
+    window.location.href = '/'
    }
   }
 } 
