@@ -7,18 +7,7 @@ import jwtDecode from 'jwt-decode'
 
 
 function MyApp({ Component, pageProps }) {
-if (typeof window !== "undefined") {
-let token = localStorage.getItem('token')
-  if (token) {
-     let decoded = jwtDecode(token)
 
-   //Check for expired token   const currentTime = Date.now() / 1000;
-  if (decoded.exp < currentTime) {
-    localStorage.clear()
-    window.location.href = '/login'
-   }
-  }
-} 
   return (
     <ChakraProvider resetCSS>
       <Header />
