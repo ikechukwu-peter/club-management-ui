@@ -98,6 +98,8 @@ export default function DashboardPage({ user, clubs }) {
                                         size='md'
                                         colorScheme="teal.800"
                                         bg="teal.500"
+                                        mx="1rem"
+   
                                         onClick={() => joinClub(club.id)}> Accept
                                     </Button>
                                     <Button
