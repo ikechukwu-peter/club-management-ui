@@ -64,7 +64,7 @@ export default function Login() {
                 }
             } catch (error) {
                 console.log(error)
-                let errorResponse = error.response ? "Error processing your request" : "Check your internet connection"
+                let errorResponse = error ? "Error processing your request" : "Check your internet connection"
 
                 const { hide, hideAfter } = cogoToast.error(`{errorResponse}`, {
                     onClick: () => {
