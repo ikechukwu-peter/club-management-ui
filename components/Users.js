@@ -31,7 +31,7 @@ export default function Users({ users, clubs }) {
             }
         } catch (error) {
             console.log(error)
-.        const { hide, hideAfter } = cogoToast.error(`An error occured while processing your request`, {
+     const { hide, hideAfter } = cogoToast.error(`An error occured while processing your request`, {
                 onClick: () => {
                     hide();
                 },
