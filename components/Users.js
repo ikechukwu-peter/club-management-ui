@@ -1,7 +1,7 @@
 import { Flex, Box, Text, Button } from '@chakra-ui/react'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
-import clubs from '../pages/clubs'
+
 
 export default function Users({ users, clubs }) {
     console.log(clubs)
