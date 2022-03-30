@@ -21,10 +21,22 @@ export default function Users({ users, clubs }) {
                 }
             })
             if (invite) {
+           const { hide, hideAfter } = cogoToast.success(`invitation successful`, {
+                onClick: () => {
+                    hide();
+                },
+                hideAfter: 3
+            });
                 console.log('DONE')
             }
         } catch (error) {
             console.log(error)
+.        const { hide, hideAfter } = cogoToast.error(`An error occured while processing your request`, {
+                onClick: () => {
+                    hide();
+                },
+                hideAfter: 3
+            });
             setLoading(false)
         }
         finally {
