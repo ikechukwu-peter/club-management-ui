@@ -1,6 +1,7 @@
 import { ButtonGroup, Container, IconButton, Stack, Flex, Box, Text,FormControl, FormLabel, Input, Button } from '@chakra-ui/react'
 import * as React from 'react'
 import { FaGithub, FaLinkedin, FaTwitter } from 'react-icons/fa'
+import cogoToast from 'cogo-toast' 
 
 export default function DashboardPage({ user, clubs }) {
 
